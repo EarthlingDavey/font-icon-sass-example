@@ -1,0 +1,50 @@
+@font-face {
+	font-family: "customicons";
+	src: url('../fonts/icons/customicons.eot');
+	src: url('../fonts/icons/customicons.eot?#iefix') format('eot'),
+		url('../fonts/icons/customicons.woff2') format('woff2'),
+		url('../fonts/icons/customicons.woff') format('woff'),
+		url('../fonts/icons/customicons.ttf') format('truetype'),
+		url('../fonts/icons/customicons.svg#customicons') format('svg');
+}
+
+@mixin icn-styles {
+	font-family: "customicons";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	// speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+	text-decoration: none;
+	text-transform: none;
+}
+
+%icn {
+	@include icn-styles;
+}
+
+@function icn-char($filename) {
+	$char: "";
+
+	@if $filename == energy {
+		$char: "\E001";
+	}
+
+	@return $char;
+}
+
+@mixin icn($filename, $insert: before, $extend: true) {
+	&:#{$insert} {
+		@if $extend {
+			@extend %icn;
+		} @else {
+			@include icn-styles;
+		}
+		content: icn-char($filename);
+	}
+}
+
+.icn-energy {
+	@include icn(energy);
+}
